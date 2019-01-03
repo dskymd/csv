@@ -35,8 +35,11 @@
       estimate() {
         let csv = this.csv
         let rows = csv.split('\n')
-        let datas = rows.map(v => v.split(','))
+        // let datas = rows.map(v => v.split(','))
+        // var csv_sample = '"学校","我が子の名前=\"健太,綾香\"","特機","鷲見","誕生日"';
+        // var csvvalue = csv_sample.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
         // let datas = rows.map( v => v.split(',([^"]*"[^"]*")*[^"]*$)', -1))
+        let datas = rows.map(v => v.match(/"[^"]*"|[^,]+/g)) // /"(\\["ntr\\]|[^"])*"|[^,]+/g
         datas = datas.slice(1, -1) //.shift()
         return datas
       },
@@ -44,11 +47,12 @@
       totalPrice() {
         let datas = this.estimate
         let tmp = 0
-        let c = 0
+        // let c = 0
         for (let r in datas) {
-          c += 1
-          if (~~datas[r][4] > 0) {
-            tmp += ~~datas[r][4]
+          if (datas[r][4]) {
+            // tmp += ~~datas[r][4].split('￥')[1]
+
+            // console.log( datas[r][4].split('￥')[1] )
           }
         }
         return tmp
