@@ -6,6 +6,10 @@
 
       orders : {{ totalPrice }} / {{ orderCount }}
 
+      <div class="prices">
+        {{prices}}
+      </div>
+
       <div class="info">{{ estimate }}</div>
     </div>
   </section>
@@ -27,9 +31,15 @@
         orders: '1'
       }
     },
-    async asyncData({ params }) {
-      const { data } = await axios.get('http://localhost:3000/orders.csv')
-      return { csv: data }
+    async asyncData({
+      params
+    }) {
+      const {
+        data
+      } = await axios.get('http://localhost:3000/orders.csv')
+      return {
+        csv: data
+      }
     },
     computed: {
       estimate() {
@@ -43,6 +53,20 @@
         datas = datas.slice(1, -1) //.shift()
         return datas
       },
+      prices() {
+
+        let csv = this.csv
+        let rows = csv.split('\n')
+        let tmp
+
+        // tmp = rows.map(v => v.match(/"[^"]*"|[^,]+/g))
+        tmp = rows.map(v => v.match(/"(\\["ntr\\]|[^"])*"|[^,]+/g))
+
+        return tmp[1]
+      },
+
+
+
 
       totalPrice() {
         let datas = this.estimate
@@ -69,6 +93,7 @@
       }
     }
   }
+
 </script>
 
 <style>
@@ -78,4 +103,5 @@
     margin: 20px;
     font-size: 10px;
   }
+
 </style>
