@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cross-env": "^5.2.0",
     "esm": "^3.2.25",
     "js-yaml": "^3.13.1",
